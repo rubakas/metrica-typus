@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "Text capsizing and whitespace trimming",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -19,12 +20,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/andriytyurnikov/rubakas-metrica-typus.git"
+    "url": "git+https://github.com/rubakas/metrica-typus.git"
   },
   "bugs": {
-    "url": "https://github.com/andriytyurnikov/rubakas-metrica-typus/issues"
+    "url": "https://github.com/rubakas/metrica-typus/issues"
   },
-  "homepage": "https://github.com/andriytyurnikov/rubakas-metrica-typus#readme",
+  "homepage": "https://github.com/rubakas/metrica-typus#readme",
   "keywords": [
     "create-tailwind-plugin",
     "tailwind-css-plugin",

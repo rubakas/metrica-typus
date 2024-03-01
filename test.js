@@ -12,17 +12,30 @@ expect.extend({
 function generatePluginCss(overrides) {
   const config = {
     theme: {
-      // Default options for your plugin.
-      // rubakasMediaResponsum: {
-      //    YOUR_PLUGIN_CUSTOM_OPTION: false,
-      // },
+      fontFamily: {
+        'berkeley-mono': [
+          'Berkeley Mono Variable',
+          'sans-serif'
+        ],
+      },
+      fontMetrics: {
+        'berkeley-mono': {
+          capHeight: 680,
+          ascent: 956,
+          descent: -244,
+          lineGap: 0,
+          unitsPerEm: 1000,
+          xHeight: 522,
+          xWidthAvg: 600
+        },
+      }
     },
     corePlugins: true,
     plugins: [customPlugin],
   };
 
   return postcss(tailwindcss(merge(config, overrides)))
-    .process('html { @apply visible tablet:invisible laptop:visible desktop:invisible desktop-4k:visible }', {
+    .process('div { @apply metrica-font-berkeley-mono metrica-capsize-rem-[3/2] metrica-leading-rem-[4] metrica-trim; }', {
       from: `${path.resolve(__filename)}`,
     })
     .then(({ css }) => css);
@@ -30,29 +43,80 @@ function generatePluginCss(overrides) {
 
 test('utility classes can be generated', () => {
   return generatePluginCss().then(css => {
-    expect(css).toMatchCss(`    
-    html {
-      visibility: visible
+    expect(css).toMatchCss(`
+    div {
+      --metrica-cap-height-trim: calc(
+              (
+                ( var(--metrica-precomputed-cap-height-trim-factor) )
+                -
+                (
+                  (
+                    (
+                      var(--metrica-precomputed-line-height-scale)
+                      *
+                      var(--metrica-font-size-scale)
+                    )
+                    -
+                    ( var(--metrica-line-height-unitless) )
+                  )
+                  /
+                  2
+                  /
+                  ( var(--metrica-font-size-scale) )
+                )
+              )
+              *
+              (-1)
+            );
+      --metrica-baseline-trim: calc(
+              (
+                ( var(--metrica-precomputed-baseline-trim-factor) )
+                -
+                (
+                  (
+                    (
+                      var(--metrica-precomputed-line-height-scale)
+                      *
+                      var(--metrica-font-size-scale)
+                    )
+                    -
+                    ( var(--metrica-line-height-unitless) )
+                  )
+                  /
+                  2
+                  /
+                  ( var(--metrica-font-size-scale) )
+                )
+              )
+              *
+              (-1)
+            )
   }
-  @media (min-width: 507px) and (min-height: 507px) {
-      html {
-          visibility: hidden
-      }
+  div::before {
+      content: ' ';
+      display: table;
+      margin-bottom: calc(var(--metrica-cap-height-trim) * 1em)
   }
-  @media (min-width: 1200px) {
-      html {
-          visibility: visible
-      }
+  div::after {
+      content: ' ';
+      display: table;
+      margin-top: calc(var(--metrica-baseline-trim) * 1em)
   }
-  @media (min-width: 1537px) {
-      html {
-          visibility: hidden
-      }
-  }
-  @media (min-width: 2049px) {
-      html {
-          visibility: visible
-      }
+  div {
+      font-family: Berkeley Mono Variable,sans-serif;
+      --metrica-precomputed-cap-height-scale: 0.68;
+      --metrica-precomputed-baseline-trim-factor: 0.244;
+      --metrica-precomputed-cap-height-trim-factor: 0.276;
+      --metrica-precomputed-line-height-scale: 1.2;
+      --metrica-cap-size-unitless: 1.5;
+      --metrica-size-unit: 1rem;
+      --metrica-font-size-cap-scale: var(--metrica-cap-size-unitless) / var(--metrica-precomputed-cap-height-scale);
+      --metrica-font-size-scale: var(--metrica-font-size-cap-scale);
+      --metrica-font-size: calc( var(--metrica-font-size-scale) * var(--metrica-size-unit));
+      font-size: var(--metrica-font-size);
+      --metrica-line-height-unitless: 4;
+      --metrica-height-unit: 1rem;
+      line-height: calc( var(--metrica-line-height-unitless) * var(--metrica-height-unit))
   }
     `);
   });
@@ -66,7 +130,7 @@ test('utility classes can be generated', () => {
 //       },
 //     },
 //   }).then(css => {
-//     expect(css).toMatchCss(`    
+//     expect(css).toMatchCss(`
 //     .example-utility-class {
 //       display: block
 //     }

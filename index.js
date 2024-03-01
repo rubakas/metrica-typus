@@ -1,13 +1,70 @@
 const plugin = require('tailwindcss/plugin')
 
-import {
-  computeCapHeightScale,
-  computeXHeightScale,
-  computeBaseLineTrimFactor,
-  computeCapHeightTrimFactor,
-  computeLineHeightScale,
-  round
-} from "./utils.js"
+function round(value) {
+	return parseFloat(value.toFixed(4)).toString()
+}
+
+const computeCapHeightScale = (metrics) => {
+  return  metrics.capHeight
+          /
+          metrics.unitsPerEm
+}
+
+const computeLineHeightScale = (metrics) => {
+  return  _contentArea(metrics)
+          /
+          metrics.unitsPerEm
+}
+
+const computeCapHeightTrimFactor = (metrics) => {
+  return  _ascentScale(metrics)
+          -
+          _capHeightScale(metrics)
+          +
+          (_lineGapScale(metrics) / 2 )
+}
+
+_ascentScale = (metrics) => {
+  return  metrics.ascent
+          /
+          metrics.unitsPerEm
+}
+
+_capHeightScale = (metrics) => {
+  return  metrics.capHeight
+          /
+          metrics.unitsPerEm
+}
+
+const computeBaseLineTrimFactor = (metrics) => {
+  return  _absoluteDescentScale(metrics)
+          +
+          (_lineGapScale(metrics) / 2)
+}
+
+const _absoluteDescentScale = (metrics) => {
+  return  _absoluteDescent(metrics)
+          /
+          metrics.unitsPerEm
+}
+
+const _absoluteDescent = (metrics) => {
+  return  Math.abs( metrics.descent )
+}
+
+const _lineGapScale = (metrics) => {
+  return  metrics.lineGap
+          /
+          metrics.unitsPerEm
+}
+
+const _contentArea = (metrics) => {
+  return  metrics.ascent
+          +
+          metrics.lineGap
+          +
+          _absoluteDescent(metrics)
+}
 
 module.exports =
   // prefix: 'metrica-',
