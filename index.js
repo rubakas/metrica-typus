@@ -24,13 +24,13 @@ const computeCapHeightTrimFactor = (metrics) => {
           (_lineGapScale(metrics) / 2 )
 }
 
-_ascentScale = (metrics) => {
+const _ascentScale = (metrics) => {
   return  metrics.ascent
           /
           metrics.unitsPerEm
 }
 
-_capHeightScale = (metrics) => {
+const _capHeightScale = (metrics) => {
   return  metrics.capHeight
           /
           metrics.unitsPerEm
