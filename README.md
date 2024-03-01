@@ -67,7 +67,7 @@ Font utility class unlocks features of Metrica Typus:
 
 ## Font metrics
 
-Don't forget to add font-metric data to your tailwind config, use [capsize](https://seek-oss.github.io/capsize/) or [FontDrop](https://fontdrop.info/) to extract font metrics data.
+Don't forget to add font-metric data to your tailwind config, using the awesome [Capsize](https://seek-oss.github.io/capsize/) or [FontDrop](https://fontdrop.info/) to extract font metrics data.
 
 
 ## License
