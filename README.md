@@ -17,7 +17,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'berkeley-mono': ['Berkeley Mono Variable', 'sans-serif'],
-      }
+      },
       fontMetrics: {
         //...
         // get font metrics at https://seek-oss.github.io/capsize/
