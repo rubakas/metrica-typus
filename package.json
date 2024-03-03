@@ -1,6 +1,6 @@
 {
   "name": "@rubakas/metrica-typus",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Text capsizing and whitespace trimming",
   "main": "index.js",
   "type": "module",
